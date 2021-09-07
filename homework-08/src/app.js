@@ -63,3 +63,53 @@ const galleryItems = [
     description: 'Lighthouse Coast Sea',
   },
 ];
+
+
+//Создание и рендер разметки по массиву данных galleryItems из app.js и предоставленному шаблону.
+//Реализация делегирования на галерее ul.js-gallery и получение url большого изображения.
+//Открытие модального окна по клику на элементе галереи.
+//Подмена значения атрибута src элемента img.lightbox__image.
+//Закрытие модального окна по клику на кнопку button[data-action="close-lightbox"].
+//Очистка значения атрибута src элемента img.lightbox__image. Это необходимо для того, чтобы при следующем открытии модального окна, пока грузится изображение, мы не видели предыдущее.
+
+const createPictureGalleryMarkup = objects => {
+ return `<li class = "gallery__item"><a class="gallery__link" href = "${objects.original}"><img class="gallery__image" src = "${objects.preview}" data-source = "${objects.original}" alt = "${objects.description}"/></a></li>`
+}
+
+
+const gallery = document.querySelector('.js-gallery')
+const createGalleryItems = galleryItems.map(createPictureGalleryMarkup).join('')
+
+gallery.insertAdjacentHTML('beforeend', createGalleryItems)
+console.log(gallery)
+
+const modalContainer = document.querySelector('.js-lightbox')
+const modalWindow = document.querySelector('.lightbox')
+const modalButtonClose = document.querySelector('.lightbox__button')
+const modalImage = document.querySelector('.lightbox__image')
+const modalImageContainer = document.querySelector('.lightbox__content')
+console.log(modalImageContainer)
+// console.log(modalImage)
+// console.log(modalContainer)
+// console.log(modalWindow)
+
+
+gallery.addEventListener('click', onGalleryItemClick)
+
+function onGalleryItemClick(e) {
+  e.preventDefault();
+  
+  console.log(modalImage)
+  modalWindow.classList.add('is-open');
+  console.log(modalImageContainer)
+  modalImage.src = e.target.dataset.source
+}
+
+modalButtonClose.addEventListener('click', onCloseButtonClick)
+
+function onCloseButtonClick(e) {
+  modalWindow.classList.remove('is-open');
+  modalImage.src = '';
+}
+
+//`<li class = "gallery__item"><a class="gallery__link" href = "${objects.original}"><img class="gallery__image" src = "${objects.preview}" data-source = "${objects.original}" alt = "${objects.description}"/></a></li>`
