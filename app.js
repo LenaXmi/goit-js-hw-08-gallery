@@ -126,6 +126,7 @@ function onCloseButtonClick(e) {
   modalImage.src = "";
   modalImage.alt = "";
   window.removeEventListener("keydown", onEscClick);
+  modalBackdrop.removeEventListener('click', onCloseButtonClick)
   // window.removeEventListener('keydown', slideByArrows)
 }
 
@@ -135,11 +136,7 @@ function onEscClick(e) {
   }
 }
 
-modalBackdrop.addEventListener("click", onBackdropClick);
-
-function onBackdropClick(e) {
-  onCloseButtonClick();
-}
+modalBackdrop.addEventListener("click", onCloseButtonClick);
 
 
  
